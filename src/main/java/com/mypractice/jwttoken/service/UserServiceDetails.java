@@ -1,12 +1,16 @@
 package com.mypractice.jwttoken.service;
 
-import java.util.ArrayList;
+import java.util.Optional;
 
-import org.springframework.security.core.userdetails.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.mypractice.jwttoken.bean.MyUserDetails;
+import com.mypractice.jwttoken.modal.Users;
+import com.mypractice.jwttoken.repo.UserRepository;
 
 /**
  * Nasruddin khan
@@ -15,11 +19,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceDetails implements UserDetailsService{
+	@Autowired
+	private UserRepository userRepo;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return new User("nasru", "nasru", new ArrayList<>());
+		Optional<Users> users=	userRepo.findByUsername(username);
+		users.orElseThrow(()->
+		new  UsernameNotFoundException(username+" :: is not found"));
+		return  users.map(MyUserDetails::new).get();
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.mypractice.jwttoken.bean;
 /**
- * NK5050747
+ * Nasruddin khan
  * AuthResponse.java
  * Dec 12, 2019 9:26:50 PM
  */
@@ -15,5 +15,4 @@ public class AuthResponse {
 	public String getJwt() {
 		return jwt;
 	}
-
 }
